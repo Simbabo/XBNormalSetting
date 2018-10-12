@@ -13,6 +13,7 @@
     UIButton *_btn;
     UIView *_bottomSeparatorV;
     UIView *_topSeparatorV;
+    UIView *_customContentV;
 }
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -22,9 +23,38 @@
 {
     if (_item!=item) [_item.rightIconView removeFromSuperview];
     _item = item;
-    if (_item.leftImage) self.imageView.image = _item.leftImage;
-    self.textLabel.attributedText = _item.title;
+    
+    if (_item.leftImage){
+        self.imageView.image = _item.leftImage;
+    }
+    
+    if (_item.subtitleString.length) {
+        UILabel *title = [UILabel new];
+        title.attributedText = _item.title;
+        [title sizeToFit];
+        
+        UILabel *subtitle = [UILabel new];
+        subtitle.attributedText = _item.subtitle;
+        subtitle.y = title.h + 2.0;
+        [subtitle sizeToFit];
+        
+        UIView *customContentV = [UIView new];
+        customContentV.backgroundColor = [UIColor clearColor];
+        customContentV.h = CGRectGetMaxY(subtitle.frame);
+        customContentV.w = self.w/2;
+        [customContentV addSubview:title];
+        [customContentV addSubview:subtitle];
+        
+        _customContentV = customContentV;
+        [self.contentView addSubview:_customContentV];
+        
+    }else{
+        self.textLabel.attributedText = _item.title;
+    }
+    
     self.detailTextLabel.attributedText = _item.detail;
+    
+    
     if (_item.hintBtn) {
         _btn = _item.hintBtn;
         [_btn addTarget:self action:@selector(hintBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -61,6 +91,7 @@
         }
         [_item.accessoryControl addTarget:self action:@selector(accessoryControlEvent) forControlEvents:event];
     }
+    
     if (_item.isBottomSeparator) {
         if (!_bottomSeparatorV) {
             _bottomSeparatorV = [[UIView alloc] init];
@@ -86,12 +117,18 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
+    
     if (_item.leftImage)
     {
         self.imageView.x = _item.itemLeading;
         self.imageView.y = (self.contentView.h - self.imageView.h)*0.5;
     }
-    self.textLabel.x = CGRectGetMaxX(self.imageView.frame)+_item.itemLeading;
+    if (_item.subtitleString.length) {
+        _customContentV.x = CGRectGetMaxX(self.imageView.frame)+_item.itemLeading;
+        _customContentV.cy = self.h/2;
+    }else{
+        self.textLabel.x = CGRectGetMaxX(self.imageView.frame)+_item.itemLeading;
+    }
     if (_item.rightIconView)
     {
         _item.rightIconView.y = (self.contentView.h - _item.rightIconView.h)*0.5;

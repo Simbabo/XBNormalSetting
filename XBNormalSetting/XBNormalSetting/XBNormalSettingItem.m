@@ -10,6 +10,7 @@
 #define DefaultTrailing 12.0
 #define DefaultTitlefontSize 15
 #define DefaultDetailfontSize 15
+#define DefaultsubTitlefontSize 12
 #define DefaultItemCellHeight 60.0
 #define DefaultSeparatorSpace 12.0
 #define DefaultSeparatorH 1
@@ -71,6 +72,15 @@
 -(NSString *)detailString
 {
     return _detail.string;
+}
+
+-(void)setSubtitleString:(NSString *)subtitleString{
+    if (!subtitleString.length)subtitleString = @"";
+    _subtitle = [[NSAttributedString alloc]initWithString:subtitleString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:DefaultsubTitlefontSize],NSForegroundColorAttributeName:DefaultDetailColor}];
+}
+
+-(NSString *)subtitleString{
+    return _subtitle.string;
 }
 
 -(void)setRightIconView:(UIImageView *)rightIconView{

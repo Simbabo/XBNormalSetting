@@ -34,8 +34,7 @@
     item_1.settingItemClicked = ^(XBNormalSettingItem * _Nonnull item) {
         NSLog(@"点击了 %@",item.titleString);
     };
-    item_1.isTopSeparator = YES;
-    item_1.topSeparatorSpace = 0;
+    item_1.isTopSeparator = NO;
     
     //类型2
     XBNormalSettingItem *item_2 = [[XBNormalSettingItem alloc] initWithTitle:@"类型2_标题" detail:@"类型2_副标题"];
@@ -64,7 +63,6 @@
     item_4.settingItemClicked = ^(XBNormalSettingItem * _Nonnull item) {
         NSLog(@"点击了 %@",item.titleString);
     };
-    item_4.isBottomSeparator = 0;
     
     //带UISwitch控件类型
     XBNormalSettingItem *item_5 = [[XBNormalSettingItem alloc] initWithTitle:@"带UISwitch控件类型" detail:@""];
@@ -122,8 +120,7 @@
     item_8.settingItemClicked = ^(XBNormalSettingItem * _Nonnull item) {
         NSLog(@"点击了 %@",item.titleString);
     };
-    item_8.isTopSeparator = YES;
-    item_8.topSeparatorSpace = 0;
+    item_8.isTopSeparator = NO;
     
     //普通类型 中标题
     XBNormalSettingItem *item_9 = [[XBNormalSettingItem alloc] initWithTitle:@"中标题" detail:@""];
@@ -144,12 +141,24 @@
     item_10.settingItemClicked = ^(XBNormalSettingItem * _Nonnull item) {
         NSLog(@"点击了 %@",item.titleString);
     };
-    item_10.bottomSeparatorSpace = 0;
+    item_10.isBottomSeparator = NO;
+    
+    //双标题文字
+    XBNormalSettingItem *item_11 = [[XBNormalSettingItem alloc] initWithTitle:@"这个是大标题" detail:@"副标题"];
+    item_11.subtitleString = @"我是默认样式的小标题,啦啦啦";
+    item_11.height = 60;
+    item_11.itemLeading = 20;
+    item_11.accessoryType = UITableViewCellAccessoryNone;
+    item_11.settingItemClicked = ^(XBNormalSettingItem * _Nonnull item) {
+        NSLog(@"点击了 %@",item.titleString);
+    };
+    item_11.isBottomSeparator = NO;
 
     //加入数组,刷新tableView
     _settingItemArray = @[@[item_1,item_2,item_3,item_4],
                           @[item_5,item_6,item_7],
-                          @[item_8,item_9,item_10]];
+                          @[item_8,item_9,item_10],
+                          @[item_11]];
     [self.tableView reloadData];
 }
 

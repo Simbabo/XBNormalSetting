@@ -25,6 +25,10 @@
  *  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
  *  ┃ title            [control]┃
  *  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+ *  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+ *  ┃ title            detail > ┃
+ *  ┃ title                     ┃
+ *  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
  */
 
 NS_ASSUME_NONNULL_BEGIN
@@ -32,13 +36,19 @@ NS_ASSUME_NONNULL_BEGIN
 @interface XBNormalSettingItem : NSObject
 
 /**
- * titleString和titleString 会始终被settingcell读取
+ * titleSring和titleString 会始终被settingcell读取
  * 高度自定义可通过 title和details进行设置
  */
 @property(nonatomic, strong)NSAttributedString *title;
 @property(nonatomic, strong)NSAttributedString *detail;
 @property(nonatomic)NSString *titleString;
 @property(nonatomic)NSString *detailString;
+
+/**
+ * 副标题 
+ */
+@property(nonatomic, strong)NSAttributedString *subtitle;
+@property(nonatomic)NSString *subtitleString;
 
 /**
  * tableCell类型 默认:UITableViewCellAccessoryDisclosureIndicator
