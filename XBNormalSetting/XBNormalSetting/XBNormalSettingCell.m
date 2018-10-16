@@ -13,6 +13,9 @@
     UIButton *_btn;
     UIView *_bottomSeparatorV;
     UIView *_topSeparatorV;
+    
+    UILabel *_titleLeb;
+    UILabel *_subTitleLeb;
     UIView *_customContentV;
 }
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -29,25 +32,29 @@
     }
     
     if (_item.subtitleString.length) {
-        UILabel *title = [UILabel new];
-        title.attributedText = _item.title;
-        [title sizeToFit];
         
-        UILabel *subtitle = [UILabel new];
-        subtitle.attributedText = _item.subtitle;
-        subtitle.y = title.h + 2.0;
-        [subtitle sizeToFit];
+        if (!_titleLeb) {
+            _titleLeb = [UILabel new];
+        }
+        _titleLeb.attributedText = _item.title;
+        [_titleLeb sizeToFit];
         
-        UIView *customContentV = [UIView new];
-        customContentV.backgroundColor = [UIColor clearColor];
-        customContentV.h = CGRectGetMaxY(subtitle.frame);
-        customContentV.w = self.w/2;
-        [customContentV addSubview:title];
-        [customContentV addSubview:subtitle];
+        if (!_subTitleLeb) {
+            _subTitleLeb = [UILabel new];
+        }
+        _subTitleLeb.attributedText = _item.subtitle;
+        _subTitleLeb.y = _titleLeb.h + 2.0;
+        [_subTitleLeb sizeToFit];
         
-        _customContentV = customContentV;
-        [self.contentView addSubview:_customContentV];
-        
+        if (!_customContentV) {
+            _customContentV = [UIView new];
+            _customContentV.backgroundColor = [UIColor clearColor];
+            [_customContentV addSubview:_titleLeb];
+            [_customContentV addSubview:_subTitleLeb];
+            [self.contentView addSubview:_customContentV];
+        }
+        _customContentV.h = _titleLeb.h + _subTitleLeb.h;
+        _customContentV.w = self.w/2;
     }else{
         self.textLabel.attributedText = _item.title;
     }
